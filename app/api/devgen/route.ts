@@ -5,7 +5,9 @@ import { renderDreamMapSVG } from "@/lib/deliverables/dream-map-svg";
 import { generateJournal } from "@/lib/deliverables/journal";
 import { generateNarration } from "@/lib/deliverables/narration";
 import { generateMeditation } from "@/lib/deliverables/meditation";
+import { generateAndStoreAudio } from "@/lib/deliverables/audio";
 import { SAMPLE_ANSWERS } from "@/lib/deliverables/sample";
+import { supabaseAdmin } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
@@ -26,6 +28,39 @@ export async function GET(req: NextRequest) {
   const want = new Set((withParam ?? "").split(",").map((s) => s.trim()).filter(Boolean));
 
   mkdirSync(DIR, { recursive: true });
+
+  // ?seed=<token>&audio=0|1&meditation=0|1 → insere uma linha "ready" com os
+  // entregáveis de exemplo e as flags de bump indicadas, para testar a trava
+  // de entrega da página real /minha-analise/[token].
+  const seed = sp.get("seed");
+  if (seed) {
+    const bumpAudio = sp.get("audio") === "1";
+    const bumpMeditation = sp.get("meditation") === "1";
+    const read = (f: string) => JSON.parse(readFileSync(`${DIR}/${f}`, "utf8"));
+    const db = supabaseAdmin();
+    await db.from("analyses").delete().eq("token", seed);
+    const { error } = await db.from("analyses").insert({
+      token: seed,
+      status: "ready",
+      nome: SAMPLE_ANSWERS.nome ?? null,
+      email: SAMPLE_ANSWERS.email ?? null,
+      answers: SAMPLE_ANSWERS,
+      analysis: read("analysis.json"),
+      journal: read("journal.json"),
+      bump_audio: bumpAudio,
+      bump_meditation: bumpMeditation,
+      narration: bumpAudio ? read("narration.json") : null,
+      meditation: bumpMeditation ? read("meditation.json") : null,
+      generated_at: new Date().toISOString(),
+    });
+    if (error) return NextResponse.json({ ok: false, error: error.message });
+    return NextResponse.json({
+      ok: true,
+      url: `/minha-analise/${seed}`,
+      bump_audio: bumpAudio,
+      bump_meditation: bumpMeditation,
+    });
+  }
 
   const analysis: FullAnalysis =
     cached || want.size
@@ -63,6 +98,14 @@ export async function GET(req: NextRequest) {
     const meditation = await generateMeditation(SAMPLE_ANSWERS, analysis);
     writeFileSync(`${DIR}/meditation.json`, JSON.stringify(meditation, null, 2));
     out.meditation = meditation;
+  }
+  if (want.has("audio")) {
+    const narration = JSON.parse(readFileSync(`${DIR}/narration.json`, "utf8"));
+    const url = await generateAndStoreAudio({
+      token: "devtest-onirica",
+      text: narration.roteiro,
+    });
+    out.audioUrl = url;
   }
 
   return NextResponse.json({ ok: true, ...out });

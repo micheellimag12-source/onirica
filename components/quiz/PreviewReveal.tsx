@@ -24,7 +24,9 @@ function buildCheckoutUrl(analysisId: string | null): string | null {
   if (!analysisId) return base;
   try {
     const url = new URL(base);
-    url.searchParams.set("ref", analysisId);
+    // `src` é o parâmetro de rastreio que a Cakto repassa no webhook — usamos
+    // para ligar o pagamento à análise certa.
+    url.searchParams.set("src", analysisId);
     return url.toString();
   } catch {
     return base;

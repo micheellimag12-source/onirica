@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import { QuizSubmissionSchema } from "@/lib/validation";
+import { createAnalysis } from "@/lib/analyses";
+import { supabaseConfigured } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 
@@ -27,8 +28,17 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // TODO (próxima fase): persistir no Supabase + disparar webhook n8n para o pipeline de IA.
-  const analysis_id = crypto.randomUUID();
+  // Persiste a submissão (status pending). Se o Supabase ainda não estiver
+  // configurado, cai num id efêmero para não quebrar o funil.
+  if (supabaseConfigured()) {
+    try {
+      const { id } = await createAnalysis(parsed.data);
+      return NextResponse.json({ success: true, analysis_id: id });
+    } catch (error) {
+      console.error("[quiz] falha ao persistir análise:", error);
+      // Não bloqueia a conversão: segue com id efêmero.
+    }
+  }
 
-  return NextResponse.json({ success: true, analysis_id });
+  return NextResponse.json({ success: true, analysis_id: crypto.randomUUID() });
 }
