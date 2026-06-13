@@ -8,6 +8,8 @@ import { generateMeditation } from "@/lib/deliverables/meditation";
 import { generateAndStoreAudio } from "@/lib/deliverables/audio";
 import { SAMPLE_ANSWERS } from "@/lib/deliverables/sample";
 import { supabaseAdmin } from "@/lib/supabase/server";
+import { getAnalysisById, updateAnalysis } from "@/lib/analyses";
+import { generateDeliverables } from "@/lib/deliverables/orchestrate";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
@@ -32,6 +34,27 @@ export async function GET(req: NextRequest) {
   // ?seed=<token>&audio=0|1&meditation=0|1 → insere uma linha "ready" com os
   // entregáveis de exemplo e as flags de bump indicadas, para testar a trava
   // de entrega da página real /minha-analise/[token].
+  // ?process=<id>&audio=1&meditation=1 → marca os bumps e roda a geração real
+  // (orquestrador) para uma análise existente. Para concluir/testar uma compra.
+  const process_id = sp.get("process");
+  if (process_id) {
+    const row = await getAnalysisById(process_id);
+    if (!row) return NextResponse.json({ ok: false, error: "análise não encontrada" });
+    await updateAnalysis(process_id, {
+      bump_audio: sp.get("audio") === "1",
+      bump_meditation: sp.get("meditation") === "1",
+    });
+    const fresh = await getAnalysisById(process_id);
+    await generateDeliverables(fresh!);
+    const done = await getAnalysisById(process_id);
+    return NextResponse.json({
+      ok: true,
+      status: done?.status,
+      token: done?.token,
+      url: `/minha-analise/${done?.token}`,
+    });
+  }
+
   const seed = sp.get("seed");
   if (seed) {
     const bumpAudio = sp.get("audio") === "1";
