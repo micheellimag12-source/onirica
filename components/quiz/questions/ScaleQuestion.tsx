@@ -31,10 +31,10 @@ export function ScaleQuestion({ question, value, onChange, onAdvance }: Props) {
               onClick={() => handleSelect(n)}
               aria-pressed={isSelected}
               className={cn(
-                "aspect-square rounded-md border font-medium text-sm transition-all min-h-[48px]",
+                "aspect-square cursor-pointer rounded-xl border text-sm font-medium transition-colors min-h-[48px]",
                 isSelected
                   ? "border-primary bg-primary/15 text-primary"
-                  : "border-border bg-card/30 text-foreground hover:border-primary/40 hover:bg-card/50",
+                  : "border-border bg-card text-foreground hover:border-primary/50",
               )}
             >
               {n}

@@ -57,13 +57,20 @@ export function SingleChoice({
             onClick={() => handleSelect(opt.value)}
             aria-pressed={isSelected}
             className={cn(
-              "w-full text-left px-5 py-4 rounded-md border bg-card/30 transition-all min-h-[56px] text-foreground",
+              "flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border bg-card px-5 py-4 text-left text-[15px] leading-snug text-foreground transition-colors min-h-[60px]",
               isSelected
-                ? "border-primary bg-primary/10 text-foreground"
-                : "border-border hover:border-primary/40 hover:bg-card/50",
+                ? "border-primary bg-primary/10"
+                : "border-border hover:border-primary/50",
             )}
           >
-            {opt.label}
+            <span>{opt.label}</span>
+            <span
+              aria-hidden="true"
+              className={cn(
+                "size-2.5 shrink-0 rounded-full border transition-colors",
+                isSelected ? "border-primary bg-primary" : "border-border",
+              )}
+            />
           </button>
         );
       })}
@@ -76,7 +83,7 @@ export function SingleChoice({
             value={extraValue ?? ""}
             onChange={(e) => onExtraChange?.(e.target.value)}
             placeholder={selected.extraField.placeholder}
-            className="w-full px-4 py-3 bg-card border border-border rounded-md text-base text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none transition mt-2"
+            className="mt-2 w-full rounded-xl border border-border bg-card px-4 py-3.5 text-base text-foreground transition-colors placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none"
             onKeyDown={(e) => {
               if (e.key === "Enter" && canAdvanceWithExtra) {
                 e.preventDefault();

@@ -4,6 +4,7 @@ import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
 import { QuizSubmissionSchema } from "@/lib/validation";
 import { formatAnswersForPrompt } from "@/lib/answers-format";
+import { stripDashesDeep } from "@/lib/deliverables/sanitize";
 
 export const runtime = "nodejs";
 // The model runs on every lead — cost lever. Override via env.
@@ -63,6 +64,7 @@ PRINCÍPIOS:
 - Entregue UM insight verdadeiro de graça (valor real, resolve um pedacinho). O resto fica para a análise completa.
 - Crie curiosidade honesta, não ansiedade. Nada de previsões fatídicas do futuro, diagnósticos médicos ou medo.
 - Tom acolhedor e empoderador. Português brasileiro. Frases limpas.
+- NUNCA use travessão (— nem –); use vírgula, ponto, dois-pontos ou parênteses.
 - Trate o sonho com seriedade; ela confiou algo íntimo a você.
 
 REGRA DE OURO — ISTO É UMA PRÉVIA, NÃO A ANÁLISE:
@@ -133,7 +135,7 @@ export async function POST(req: NextRequest) {
       throw new Error("Resposta sem conteúdo estruturado.");
     }
 
-    return NextResponse.json({ success: true, preview });
+    return NextResponse.json({ success: true, preview: stripDashesDeep(preview) });
   } catch (error) {
     if (error instanceof Anthropic.RateLimitError) {
       return NextResponse.json(

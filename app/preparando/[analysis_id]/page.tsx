@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { OniricaMark } from "@/components/OniricaMark";
 
 export const metadata: Metadata = {
-  title: "Preparando sua análise — Onírica",
+  title: "Preparando sua análise · Onírica",
 };
 
 interface PreparandoPageProps {
@@ -20,8 +20,8 @@ export default async function PreparandoPage({ params }: PreparandoPageProps) {
           Sua análise está sendo preparada.
         </h1>
         <p className="text-muted-foreground leading-relaxed">
-          Recebemos seu pagamento. Sua experiência Onírica completa — áudio, Mapa
-          Onírico e diário de 7 dias — está sendo gerada e aparecerá aqui em
+          Recebemos seu pagamento. Sua experiência Onírica completa (áudio, Mapa
+          Onírico e diário de 7 dias) está sendo gerada e aparecerá aqui em
           instantes.
         </p>
         <p className="text-xs text-muted-foreground/60 mt-4">

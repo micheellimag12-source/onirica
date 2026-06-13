@@ -81,6 +81,7 @@
 
   html {
     @apply font-body;
+    overflow-x: clip;
   }
 
   body {

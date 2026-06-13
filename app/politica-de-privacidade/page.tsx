@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Política de Privacidade — Onírica",
+  title: "Política de Privacidade · Onírica",
 };
 
 export default function PoliticaDePrivacidade() {

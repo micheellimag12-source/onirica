@@ -32,8 +32,8 @@ export function MultiChoice({ question, value, onChange, onAdvance }: Props) {
   return (
     <div className="flex flex-col gap-3 mt-2">
       {max && (
-        <span className="text-xs text-muted-foreground">
-          {selected.length} / {max} selecionado{max > 1 ? "s" : ""}
+        <span className="self-start rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
+          {selected.length} de {max} selecionado{max > 1 ? "s" : ""}
         </span>
       )}
 
@@ -49,21 +49,26 @@ export function MultiChoice({ question, value, onChange, onAdvance }: Props) {
             disabled={atMax}
             aria-pressed={isSelected}
             className={cn(
-              "w-full text-left px-5 py-4 rounded-md border bg-card/30 transition-all min-h-[56px] flex items-center justify-between gap-3 text-foreground",
+              "flex w-full items-center justify-between gap-3 rounded-xl border bg-card px-5 py-4 text-left text-[15px] leading-snug text-foreground transition-colors min-h-[60px]",
               isSelected
                 ? "border-primary bg-primary/10"
                 : atMax
-                  ? "border-border opacity-40"
-                  : "border-border hover:border-primary/40 hover:bg-card/50",
+                  ? "cursor-not-allowed border-border opacity-40"
+                  : "cursor-pointer border-border hover:border-primary/50",
             )}
           >
             <span>{opt.label}</span>
-            {isSelected && (
-              <Check
-                className="size-4 text-primary shrink-0"
-                aria-hidden="true"
-              />
-            )}
+            <span
+              aria-hidden="true"
+              className={cn(
+                "flex size-5 shrink-0 items-center justify-center rounded-md border transition-colors",
+                isSelected ? "border-primary bg-primary" : "border-border",
+              )}
+            >
+              {isSelected && (
+                <Check className="size-3.5 text-primary-foreground" aria-hidden="true" />
+              )}
+            </span>
           </button>
         );
       })}

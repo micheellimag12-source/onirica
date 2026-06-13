@@ -143,7 +143,7 @@ export const QUESTIONS: Question[] = [
     type: "textarea",
     text: "Se quiser, conte brevemente o que está acontecendo agora na sua vida.",
     placeholder:
-      "Você não precisa entrar em muitos detalhes — só o que faz sentido pra você compartilhar.",
+      "Você não precisa entrar em muitos detalhes, só o que faz sentido pra você compartilhar.",
     maxLength: 1000,
     required: false,
   },

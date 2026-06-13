@@ -28,11 +28,16 @@ export function QuizIntro({ onBegin, onBack }: Props) {
         <ArrowLeft className="size-4" aria-hidden="true" /> Voltar
       </button>
 
-      <h2 className="font-display text-3xl md:text-4xl text-foreground leading-tight">
-        {QUIZ_INTRO_CONTENT.title}
-      </h2>
+      <div className="flex flex-col items-center gap-4">
+        <span className="text-[11px] uppercase tracking-[0.25em] text-primary/80">
+          Antes de começar
+        </span>
+        <h2 className="font-display text-3xl leading-tight text-foreground md:text-4xl">
+          {QUIZ_INTRO_CONTENT.title}
+        </h2>
+      </div>
 
-      <div className="flex flex-col gap-4 text-foreground/80 leading-relaxed">
+      <div className="flex max-w-[500px] flex-col gap-4 text-pretty leading-relaxed text-foreground/85">
         {QUIZ_INTRO_CONTENT.body.map((p, i) => (
           <p key={i}>{p}</p>
         ))}

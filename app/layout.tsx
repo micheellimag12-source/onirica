@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Onírica — Análise personalizada de sonhos",
+  title: "Onírica · Análise personalizada de sonhos",
   description:
     "Em 6 minutos, descubra o que seu sonho está realmente te dizendo. A primeira análise onírica brasileira que une neurociência, psicologia profunda e fé.",
 };

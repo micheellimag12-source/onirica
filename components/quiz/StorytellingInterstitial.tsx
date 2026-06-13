@@ -44,17 +44,18 @@ export function StorytellingInterstitial({
         <ArrowLeft className="size-4" aria-hidden="true" /> Voltar
       </button>
 
-      {eyebrow && (
-        <span className="text-[11px] uppercase tracking-[0.2em] text-primary/80">
-          {eyebrow}
-        </span>
-      )}
+      <div className="flex flex-col items-center gap-4">
+        {eyebrow && (
+          <span className="text-[11px] uppercase tracking-[0.25em] text-primary/80">
+            {eyebrow}
+          </span>
+        )}
+        <h2 className="font-display text-3xl leading-tight text-foreground md:text-4xl">
+          {title}
+        </h2>
+      </div>
 
-      <h2 className="font-display text-3xl md:text-4xl text-foreground leading-tight -mt-4">
-        {title}
-      </h2>
-
-      <div className="flex flex-col gap-4 text-foreground/80 leading-relaxed">
+      <div className="flex max-w-[520px] flex-col gap-4 text-pretty leading-relaxed text-foreground/85">
         {body.map((p, i) => (
           <p key={i}>{p}</p>
         ))}

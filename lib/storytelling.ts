@@ -77,7 +77,7 @@ export const INTERSTITIALS: Interstitial[] = [
     },
     body: () => [
       "Antes de falar do seu sonho, queria te dizer uma coisa: a maioria das pessoas ignora o que sonha. Você não.",
-      "Esse pequeno gesto — parar pra prestar atenção — já diz muito sobre o momento em que você está.",
+      "Esse pequeno gesto (parar pra prestar atenção) já diz muito sobre o momento em que você está.",
       "Agora vamos entender esse momento.",
     ],
     cta: "Continuar",
@@ -96,7 +96,7 @@ export const INTERSTITIALS: Interstitial[] = [
       const out: string[] = [];
       if (estado) {
         out.push(
-          `Você descreveu suas últimas semanas com uma palavra: ${estado}. Guarde isso — porque o sonho que te trouxe aqui quase nunca é sobre o sonho. É sobre esse estado.`,
+          `Você descreveu suas últimas semanas com uma palavra: ${estado}. Guarde isso, porque o sonho que te trouxe aqui quase nunca é sobre o sonho. É sobre esse estado.`,
         );
       } else {
         out.push(
@@ -105,7 +105,7 @@ export const INTERSTITIALS: Interstitial[] = [
       }
       if (areas.length) {
         out.push(
-          `E quando a vida pede atenção em ${joinPt(areas)}, é exatamente aí que os sonhos ficam mais vívidos — eles tentam processar o que a mente desperta ainda não conseguiu.`,
+          `E quando a vida pede atenção em ${joinPt(areas)}, é exatamente aí que os sonhos ficam mais vívidos: eles tentam processar o que a mente desperta ainda não conseguiu.`,
         );
       }
       out.push(
@@ -133,20 +133,20 @@ export const INTERSTITIALS: Interstitial[] = [
       const out: string[] = [];
       if (simbolos.length >= 2) {
         out.push(
-          `Você trouxe ${joinPt(simbolos.slice(0, 3))}. Essa combinação não é aleatória — cada um desses símbolos carrega um significado, e juntos eles formam um padrão que diz respeito a uma única coisa na sua vida.`,
+          `Você trouxe ${joinPt(simbolos.slice(0, 3))}. Essa combinação não é aleatória: cada um desses símbolos carrega um significado, e juntos eles formam um padrão que diz respeito a uma única coisa na sua vida.`,
         );
       } else if (simbolos.length === 1) {
         out.push(
-          `Você trouxe ${simbolos[0]}. Esse é um dos símbolos mais densos que aparecem nos sonhos — e a forma como ele apareceu no SEU sonho muda tudo.`,
+          `Você trouxe ${simbolos[0]}. Esse é um dos símbolos mais densos que aparecem nos sonhos, e a forma como ele apareceu no SEU sonho muda tudo.`,
         );
       } else {
         out.push(
-          "Mesmo sem um símbolo óbvio, a estrutura do seu sonho — como ele começa, o que acontece e como termina — já revela um padrão.",
+          "Mesmo sem um símbolo óbvio, a estrutura do seu sonho (como ele começa, o que acontece e como termina) já revela um padrão.",
         );
       }
       if (emocao) {
         out.push(
-          `E a emoção mais forte que você sentiu — ${emocao} — é a chave. Ela aponta para o que essa parte de você está tentando te dizer.`,
+          `E a emoção mais forte que você sentiu (${emocao}) é a chave. Ela aponta para o que essa parte de você está tentando te dizer.`,
         );
       }
       out.push(
@@ -154,7 +154,7 @@ export const INTERSTITIALS: Interstitial[] = [
       );
       return out;
     },
-    cta: "Quase lá — continuar",
+    cta: "Quase lá, continuar",
   },
 
   // After block 5 (patterns) — build to the climax: her question.

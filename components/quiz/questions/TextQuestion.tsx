@@ -42,7 +42,7 @@ export function TextQuestion({ question, value, onChange, onAdvance }: Props) {
         placeholder={question.placeholder}
         autoComplete={question.inputType === "email" ? "email" : "off"}
         inputMode={question.inputType === "email" ? "email" : "text"}
-        className="w-full px-4 py-3 bg-card border border-border rounded-md text-base text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none transition"
+        className="w-full rounded-xl border border-border bg-card px-4 py-3.5 text-base text-foreground transition-colors placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none"
       />
       {error && (
         <span className="text-sm text-destructive">{error}</span>

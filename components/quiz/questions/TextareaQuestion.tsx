@@ -44,7 +44,7 @@ export function TextareaQuestion({
         placeholder={question.placeholder}
         maxLength={limit}
         rows={6}
-        className="w-full px-4 py-3 bg-card border border-border rounded-md text-base text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none transition resize-y min-h-[140px]"
+        className="w-full resize-y rounded-xl border border-border bg-card px-4 py-3.5 text-base text-foreground transition-colors placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none min-h-[140px]"
       />
       <div className="flex justify-between items-center text-xs text-muted-foreground">
         <span className={error ? "text-destructive" : ""}>

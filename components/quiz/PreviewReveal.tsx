@@ -56,7 +56,7 @@ export function PreviewReveal({ preview, analysisId }: Props) {
       </p>
 
       {/* The one free insight */}
-      <div className="rounded-lg border border-border bg-card/60 p-6 flex flex-col gap-3">
+      <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-6">
         <span className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-primary/90">
           <Sparkles className="size-3.5" aria-hidden="true" /> Uma primeira leitura
         </span>
@@ -67,7 +67,7 @@ export function PreviewReveal({ preview, analysisId }: Props) {
       <p className="text-foreground/80 leading-relaxed">{preview.gancho}</p>
 
       {/* Locked: the full analysis */}
-      <div className="relative rounded-xl border border-primary/30 bg-surface-elevated/40 p-6 md:p-8 flex flex-col gap-5 overflow-hidden">
+      <div className="relative flex flex-col gap-5 overflow-hidden rounded-2xl border border-primary/30 bg-card p-6 md:p-8">
         <div
           className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/40"
           aria-hidden="true"
@@ -113,7 +113,7 @@ export function PreviewReveal({ preview, analysisId }: Props) {
         {checkoutUrl ? (
           <a
             href={checkoutUrl}
-            className="inline-flex items-center justify-center gap-2 font-medium rounded-md px-7 py-4 text-base transition-all min-h-[48px] bg-primary text-primary-foreground hover:brightness-110"
+            className="inline-flex min-h-[48px] cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary px-7 py-4 text-base font-medium text-primary-foreground transition-all hover:brightness-110"
           >
             Desbloquear minha análise completa
             <ArrowRight className="size-4" aria-hidden="true" />
@@ -125,7 +125,7 @@ export function PreviewReveal({ preview, analysisId }: Props) {
               <ArrowRight className="size-4" aria-hidden="true" />
             </CTAButton>
             <span className="text-xs text-muted-foreground">
-              Checkout em configuração — disponível em breve.
+              Checkout em configuração, disponível em breve.
             </span>
           </>
         )}

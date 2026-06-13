@@ -47,35 +47,28 @@ export function QuestionShell({
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -24 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="w-full max-w-[600px] mx-auto px-6 py-10 md:py-14 flex flex-col gap-7"
+      className="w-full max-w-[600px] mx-auto px-6 py-10 md:py-14 flex flex-col gap-8"
     >
       <button
         type="button"
         onClick={onBack}
-        className="self-start text-sm text-muted-foreground hover:text-foreground transition inline-flex items-center gap-1.5"
+        className="inline-flex cursor-pointer items-center gap-1.5 self-start text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
         <ArrowLeft className="size-4" aria-hidden="true" /> Voltar
       </button>
 
-      {block && block.title && (
-        <div className="flex flex-col gap-1">
-          <span className="text-[11px] uppercase tracking-[0.2em] text-primary/80">
+      {/* Eyebrow do bloco + pergunta = um nível de hierarquia */}
+      <div className="flex flex-col">
+        {block && block.title && (
+          <span className="mb-3 text-[11px] uppercase tracking-[0.22em] text-primary/80">
             {block.title}
           </span>
-          {block.subtitle && (
-            <span className="text-sm text-muted-foreground">
-              {block.subtitle}
-            </span>
-          )}
-        </div>
-      )}
-
-      <div className="flex flex-col gap-3">
-        <h2 className="font-display text-2xl md:text-3xl text-foreground leading-snug">
+        )}
+        <h2 className="font-display text-[1.7rem] leading-snug text-foreground md:text-3xl">
           {question.text}
         </h2>
         {question.subtext && (
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
             {question.subtext}
           </p>
         )}
