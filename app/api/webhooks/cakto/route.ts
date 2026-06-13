@@ -20,13 +20,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: "payload inválido" }, { status: 400 });
   }
 
-  // Valida o segredo se ele já estiver configurado no ambiente.
+  // FASE DE CAPTURA: guarda o evento SEMPRE (antes de validar), para inspecionar
+  // o payload real e confirmar onde vem o secret. A validação estrita (rejeitar)
+  // entra na versão de processamento final.
   const expected = process.env.CAKTO_WEBHOOK_SECRET;
-  if (expected && payload.secret !== expected) {
-    return NextResponse.json({ ok: false, error: "secret inválido" }, { status: 401 });
-  }
-
-  // Guarda o evento para inspeção (não falha a resposta se o banco estiver off).
+  const secretValid = !expected || payload.secret === expected;
   if (supabaseConfigured()) {
     try {
       await supabaseAdmin().from("webhook_events").insert({
@@ -36,6 +34,7 @@ export async function POST(req: NextRequest) {
         headers: {
           "content-type": req.headers.get("content-type"),
           "user-agent": req.headers.get("user-agent"),
+          "x-secret-valid": String(secretValid),
         },
       });
     } catch (e) {
