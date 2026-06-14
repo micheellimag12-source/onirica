@@ -5,6 +5,7 @@ import { ArrowRight, Lock, Headphones, Map, BookOpen, FileText, Sparkles } from 
 import type { PreviewContent } from "@/types/quiz";
 import { CTAButton } from "@/components/CTAButton";
 import { OniricaMark } from "@/components/OniricaMark";
+import { fbqTrack } from "@/lib/fbq";
 
 interface Props {
   preview: PreviewContent;
@@ -115,6 +116,7 @@ export function PreviewReveal({ preview, analysisId }: Props) {
         {checkoutUrl ? (
           <a
             href={checkoutUrl}
+            onClick={() => fbqTrack("InitiateCheckout")}
             className="inline-flex min-h-[48px] cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary px-7 py-4 text-base font-medium text-primary-foreground transition-all hover:brightness-110"
           >
             Desbloquear minha análise completa

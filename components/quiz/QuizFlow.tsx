@@ -5,6 +5,7 @@ import { AnimatePresence } from "motion/react";
 import { quizReducer, INITIAL_STATE } from "@/lib/quiz-state";
 import { QUESTIONS } from "@/lib/quiz-config";
 import { getInterstitial } from "@/lib/storytelling";
+import { fbqTrack } from "@/lib/fbq";
 import {
   clearQuizState,
   loadQuizState,
@@ -63,6 +64,7 @@ export function QuizFlow() {
     if (!nome || !email) return;
 
     leadCaptured.current = true;
+    fbqTrack("Lead");
     fetch("/api/lead", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
