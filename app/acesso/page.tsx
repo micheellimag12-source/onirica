@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { getAnalysisById } from "@/lib/analyses";
+import { getAnalysisById, getAnalysisByCaktoOrder } from "@/lib/analyses";
 import { OniricaMark } from "@/components/OniricaMark";
 
 export const runtime = "nodejs";
@@ -14,27 +14,46 @@ export const metadata: Metadata = {
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 /**
- * Página de entrega pós-compra (URL configurada na Cakto).
- * Se a Cakto repassar o `src` (id da análise) no redirecionamento, manda a
- * pessoa direto para a área dela. Senão, orienta a checar o e-mail (canal
- * garantido, enviado pelo webhook).
+ * Página de entrega pós-compra (URL configurada na Cakto como "Área de membros
+ * Externa"). Varre todos os parâmetros da URL e, achando algo que case com uma
+ * análise (pelo id/`src` ou pelo id do pedido Cakto), manda a pessoa direto pra
+ * área dela. Senão, orienta a checar o e-mail (canal garantido, via Resend).
  */
 export default async function AcessoPage({
   searchParams,
 }: {
-  searchParams: Promise<Record<string, string | undefined>>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const sp = await searchParams;
-  const id = sp.src || sp.ref || sp.s || sp.order || sp.transaction;
+  const values = Object.values(sp)
+    .flatMap((v) => (Array.isArray(v) ? v : [v]))
+    .filter((v): v is string => !!v);
 
-  if (id && UUID.test(id)) {
+  let token: string | null = null;
+  for (const v of values) {
+    if (UUID.test(v)) {
+      try {
+        const row = await getAnalysisById(v);
+        if (row) {
+          token = row.token;
+          break;
+        }
+      } catch {
+        // ignora
+      }
+    }
     try {
-      const row = await getAnalysisById(id);
-      if (row) redirect(`/minha-analise/${row.token}`);
+      const row = await getAnalysisByCaktoOrder(v);
+      if (row) {
+        token = row.token;
+        break;
+      }
     } catch {
-      // ignora e cai no fallback abaixo
+      // ignora
     }
   }
+
+  if (token) redirect(`/minha-analise/${token}`);
 
   return (
     <main className="flex min-h-screen flex-1 flex-col items-center justify-center bg-background px-6 py-20 text-center text-foreground">

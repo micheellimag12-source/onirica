@@ -75,6 +75,21 @@ export async function getAnalysisByToken(
   return (data as AnalysisRow | null) ?? null;
 }
 
+export async function getAnalysisByCaktoOrder(
+  orderId: string,
+): Promise<AnalysisRow | null> {
+  const db = supabaseAdmin();
+  const { data, error } = await db
+    .from("analyses")
+    .select("*")
+    .eq("cakto_order_id", orderId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (error) throw error;
+  return (data as AnalysisRow | null) ?? null;
+}
+
 export async function getAnalysisById(id: string): Promise<AnalysisRow | null> {
   const db = supabaseAdmin();
   const { data, error } = await db
