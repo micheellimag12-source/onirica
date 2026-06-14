@@ -3,7 +3,7 @@ import type { FullAnalysis } from "@/lib/deliverables";
 /** Seção da análise completa (entregável principal). */
 export function AnaliseSection({ analysis }: { analysis: FullAnalysis }) {
   return (
-    <section id="analise" className="scroll-mt-20 pt-16">
+    <section id="analise" className="pt-6">
       {/* Hero */}
       <div className="border-b border-border pb-12 text-center">
         <p className="mb-4 text-xs uppercase tracking-[0.25em] text-primary/80">

@@ -15,7 +15,7 @@ export function AudioSection({
 }) {
   const [open, setOpen] = useState(false);
   return (
-    <section id="audio" className="scroll-mt-20 pt-20">
+    <section id="audio" className="pt-6">
       <SectionHeader eyebrow="Order bump" title="Sua análise narrada" />
 
       <div className="rounded-2xl border border-border bg-card p-7">

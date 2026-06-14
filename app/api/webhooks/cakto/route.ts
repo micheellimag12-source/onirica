@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse, after } from "next/server";
 import { getAnalysisById, updateAnalysis } from "@/lib/analyses";
-import { generateDeliverables } from "@/lib/deliverables/orchestrate";
+import {
+  generateDeliverables,
+  generateAudioBump,
+  generateMeditationBump,
+} from "@/lib/deliverables/orchestrate";
 import { sendAccessLink } from "@/lib/email";
 import { supabaseAdmin, supabaseConfigured } from "@/lib/supabase/server";
 
@@ -93,8 +97,10 @@ export async function POST(req: NextRequest) {
     .eq("status", "pending")
     .select("id");
 
+  const emails = [...new Set([data.customer?.email, row.email].filter(Boolean))] as string[];
+
   if (claimed && claimed.length > 0) {
-    const emails = [...new Set([data.customer?.email, row.email].filter(Boolean))] as string[];
+    // Compra inicial: gera tudo.
     after(async () => {
       // 1) Manda o link de acesso (canal garantido).
       for (const email of emails) {
@@ -119,6 +125,26 @@ export async function POST(req: NextRequest) {
         }
       }
     });
+  } else {
+    // Não é o primeiro evento de uma análise 'pending'. Pode ser um UPSELL:
+    // a análise já está pronta e a pessoa comprou um bump depois.
+    const fresh = await getAnalysisById(src);
+    if (fresh && fresh.status === "ready" && fresh.analysis) {
+      if (offerId === OFFER_AUDIO && !fresh.narration) {
+        after(() =>
+          generateAudioBump(fresh).catch((e) =>
+            console.error("[cakto] upsell áudio falhou:", e),
+          ),
+        );
+      }
+      if (offerId === OFFER_MEDITATION && !fresh.meditation) {
+        after(() =>
+          generateMeditationBump(fresh).catch((e) =>
+            console.error("[cakto] upsell meditação falhou:", e),
+          ),
+        );
+      }
+    }
   }
 
   return NextResponse.json({ ok: true });

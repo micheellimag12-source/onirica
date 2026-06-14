@@ -4,7 +4,7 @@ import { SectionHeader } from "./AreaShell";
 export function MapaSection({ svg }: { svg: string }) {
   const href = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
   return (
-    <section id="mapa" className="scroll-mt-20 pt-20">
+    <section id="mapa" className="pt-6">
       <SectionHeader eyebrow="Entregável" title="Seu Mapa Onírico" />
 
       <div

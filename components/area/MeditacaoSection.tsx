@@ -5,7 +5,7 @@ import { Paragraphs } from "./Paragraphs";
 /** Seção de meditação guiada + higiene do sono (order bump). */
 export function MeditacaoSection({ meditation }: { meditation: Meditation }) {
   return (
-    <section id="meditacao" className="scroll-mt-20 pt-20">
+    <section id="meditacao" className="pt-6">
       <SectionHeader eyebrow="Order bump" title="Meditação & sono" />
 
       <p className="mb-10 text-lg leading-relaxed text-foreground/85">

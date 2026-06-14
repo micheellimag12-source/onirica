@@ -64,3 +64,24 @@ export async function generateDeliverables(row: AnalysisRow): Promise<void> {
     throw e;
   }
 }
+
+/**
+ * Geração incremental de um bump comprado DEPOIS (upsell), quando a análise já
+ * está pronta. Gera só o item novo, usando a análise existente como base.
+ */
+export async function generateAudioBump(row: AnalysisRow): Promise<void> {
+  if (!row.analysis) throw new Error("Sem análise base para gerar o áudio.");
+  const narration = await generateNarration(row.answers, row.analysis);
+  await updateAnalysis(row.id, { narration });
+  const audio_url = await generateAndStoreAudio({
+    token: row.token,
+    text: narration.roteiro,
+  });
+  await updateAnalysis(row.id, { audio_url });
+}
+
+export async function generateMeditationBump(row: AnalysisRow): Promise<void> {
+  if (!row.analysis) throw new Error("Sem análise base para gerar a meditação.");
+  const meditation = await generateMeditation(row.answers, row.analysis);
+  await updateAnalysis(row.id, { meditation });
+}

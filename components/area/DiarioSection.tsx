@@ -4,7 +4,7 @@ import { SectionHeader } from "./AreaShell";
 /** Seção do diário guiado de 7 dias. */
 export function DiarioSection({ journal }: { journal: Journal }) {
   return (
-    <section id="diario" className="scroll-mt-20 pt-20">
+    <section id="diario" className="pt-6">
       <SectionHeader eyebrow="Entregável" title="Diário de 7 dias" />
 
       <p className="mb-10 text-lg leading-relaxed text-foreground/85">

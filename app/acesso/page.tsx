@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getAnalysisById, getAnalysisByCaktoOrder } from "@/lib/analyses";
-import { supabaseAdmin, supabaseConfigured } from "@/lib/supabase/server";
 import { OniricaMark } from "@/components/OniricaMark";
 
 export const runtime = "nodejs";
@@ -55,20 +54,6 @@ export default async function AcessoPage({
   }
 
   if (token) redirect(`/minha-analise/${token}`);
-
-  // DEBUG temporário: registra o que a Cakto mandou quando não identificamos,
-  // para mapear o parâmetro de redirecionamento. Remover depois.
-  if (supabaseConfigured()) {
-    try {
-      await supabaseAdmin().from("webhook_events").insert({
-        source: "acesso-miss",
-        event: "redirect",
-        payload: { params: sp },
-      });
-    } catch {
-      // ignora
-    }
-  }
 
   return (
     <main className="flex min-h-screen flex-1 flex-col items-center justify-center bg-background px-6 py-20 text-center text-foreground">
