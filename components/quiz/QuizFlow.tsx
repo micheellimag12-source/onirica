@@ -5,7 +5,7 @@ import { AnimatePresence } from "motion/react";
 import { quizReducer, INITIAL_STATE } from "@/lib/quiz-state";
 import { QUESTIONS } from "@/lib/quiz-config";
 import { getInterstitial } from "@/lib/storytelling";
-import { fbqTrack } from "@/lib/fbq";
+import { fbEvent } from "@/lib/fbq";
 import {
   clearQuizState,
   loadQuizState,
@@ -19,8 +19,9 @@ import { PreviewGenerating } from "./PreviewGenerating";
 import { PreviewReveal } from "./PreviewReveal";
 import { ResumeModal } from "./ResumeModal";
 import { ProgressBar } from "./ProgressBar";
+import type { LandingVariant } from "@/lib/ab";
 
-export function QuizFlow() {
+export function QuizFlow({ variant = "a" }: { variant?: LandingVariant } = {}) {
   const [state, dispatch] = useReducer(quizReducer, INITIAL_STATE);
   const [hydrated, setHydrated] = useState(false);
   const [showResume, setShowResume] = useState(false);
@@ -54,17 +55,18 @@ export function QuizFlow() {
     saveQuizState(state.step, state.answers);
   }, [state.step, state.answers, hydrated, showResume]);
 
-  // Lead capture parcial: fire once after user advances past Q4 (email)
+  // Lead capture: dispara uma vez quando nome + e-mail válido estão presentes.
+  // O e-mail é a última pergunta do quiz, então o Lead representa quem chegou ao fim.
   useEffect(() => {
     if (leadCaptured.current) return;
     if (state.step.kind !== "question") return;
-    if (state.step.index < 4) return;
 
     const { nome, email, identificacao_espiritual } = state.answers;
     if (!nome || !email) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
 
     leadCaptured.current = true;
-    fbqTrack("Lead");
+    fbEvent("Lead", { user: { em: email } });
     fetch("/api/lead", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -115,7 +117,11 @@ export function QuizFlow() {
 
       <AnimatePresence mode="wait" initial={false}>
         {state.step.kind === "initial" && (
-          <LandingHero key="initial" onStart={() => dispatch({ type: "START" })} />
+          <LandingHero
+            key="initial"
+            variant={variant}
+            onStart={() => dispatch({ type: "START" })}
+          />
         )}
 
         {state.step.kind === "intro" && (

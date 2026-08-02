@@ -9,22 +9,16 @@ import type {
 import { TOTAL_QUESTIONS } from "./quiz-config";
 import { getInterstitial, interstitialAfter } from "./storytelling";
 
-// Index ranges per block (inclusive start, exclusive end).
-// Block 3 has zero questions — it's a transitional intro screen between B2 and B4.
+// Index ranges per block (inclusive start, exclusive end). Quiz enxuto (8 Q).
 const BLOCK_RANGES: ReadonlyArray<{
   block: 1 | 2 | 3 | 4 | 5 | 6;
   start: number;
   end: number;
 }> = [
-  { block: 1, start: 0, end: 4 }, // q1..q4
-  { block: 2, start: 4, end: 8 }, // q5..q8
-  { block: 3, start: 8, end: 8 }, // intro only
-  { block: 4, start: 8, end: 14 }, // q9..q14
-  { block: 5, start: 14, end: 18 }, // q15..q18
-  { block: 6, start: 18, end: 22 }, // q19..q22
+  { block: 1, start: 0, end: 3 }, // q1..q3 (você e seu sonho)
+  { block: 2, start: 3, end: 6 }, // q4..q6 (o sonho)
+  { block: 3, start: 6, end: 8 }, // q7..q8 (pergunta + e-mail)
 ];
-
-const FIRST_B4_INDEX = 8;
 
 export const INITIAL_STATE: QuizMachineState = {
   step: { kind: "initial" },
@@ -186,11 +180,7 @@ export function computeProgress(step: QuizStep): QuizProgress | null {
     questionNumber = step.index + 1;
   }
 
-  const segments = BLOCK_RANGES.map(({ block, start, end }) => {
-    if (block === 3) {
-      // Binary: full when we've passed B2
-      return cursor >= FIRST_B4_INDEX ? 1 : 0;
-    }
+  const segments = BLOCK_RANGES.map(({ start, end }) => {
     const total = end - start;
     if (total === 0) return 0;
     const done = Math.max(0, Math.min(total, cursor - start));

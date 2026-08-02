@@ -10,6 +10,7 @@ import type {
 } from "@/types/quiz";
 import { OniricaMark } from "@/components/OniricaMark";
 import { CTAButton } from "@/components/CTAButton";
+import { getFbCookies } from "@/lib/fbq";
 
 interface Props {
   answers: QuizAnswers;
@@ -55,10 +56,12 @@ export function PreviewGenerating({
       onGenerateStart();
       try {
         // 1. Register the submission (returns analysis_id).
+        // Junto vão os cookies do Pixel (_fbp/_fbc) para enriquecer o Purchase.
+        const fb = getFbCookies();
         const quizRes = await fetch("/api/quiz", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(answers),
+          body: JSON.stringify({ ...answers, fbp: fb.fbp, fbc: fb.fbc }),
         });
         if (!quizRes.ok) {
           const b = (await quizRes.json().catch(() => ({}))) as { error?: string };

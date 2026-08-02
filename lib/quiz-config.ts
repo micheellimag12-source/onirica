@@ -1,24 +1,23 @@
 import type { BlockConfig, Question } from "@/types/quiz";
 
+/**
+ * Quiz enxuto (8 perguntas), focado em conversão:
+ * - O sonho vem cedo (a pessoa investe no que veio buscar).
+ * - O e-mail fica por último ("pra onde enviamos sua análise").
+ * - Telas de espelho (storytelling) entre os blocos seguram o engajamento.
+ *
+ * Os campos mantêm os MESMOS nomes do gerador (formatAnswersForPrompt), então
+ * a análise continua consistente, montada a partir do texto do sonho + contexto.
+ */
+
 export const BLOCKS: BlockConfig[] = [
-  { id: 1, title: "Sobre você", subtitle: "Pra começar, queremos te conhecer" },
-  {
-    id: 2,
-    title: "Seu momento de vida",
-    subtitle: "Os sonhos só fazem sentido em contexto",
-  },
-  { id: 3, title: "" },
-  { id: 4, title: "O sonho" },
-  { id: 5, title: "Padrões" },
-  {
-    id: 6,
-    title: "Sua pergunta",
-    subtitle: "Quase lá. Essa é a parte mais importante.",
-  },
+  { id: 1, title: "Você e seu sonho", subtitle: "Pra começar, queremos te conhecer" },
+  { id: 2, title: "O sonho", subtitle: "Conte com o máximo de detalhes que lembrar" },
+  { id: 3, title: "Sua pergunta", subtitle: "Quase lá. Essa é a parte mais importante." },
 ];
 
 export const QUESTIONS: Question[] = [
-  // BLOCO 1 — Sobre você
+  // BLOCO 1 — Você e seu sonho
   {
     id: "q1",
     block: 1,
@@ -35,24 +34,6 @@ export const QUESTIONS: Question[] = [
     id: "q2",
     block: 1,
     blockOrder: 2,
-    field: "idade",
-    type: "single",
-    text: "Qual a sua idade?",
-    required: true,
-    options: [
-      { value: "18-24", label: "18-24" },
-      { value: "25-30", label: "25-30" },
-      { value: "31-35", label: "31-35" },
-      { value: "36-40", label: "36-40" },
-      { value: "41-45", label: "41-45" },
-      { value: "46-55", label: "46-55" },
-      { value: "55+", label: "55+" },
-    ],
-  },
-  {
-    id: "q3",
-    block: 1,
-    blockOrder: 3,
     field: "identificacao_espiritual",
     type: "single",
     text: "Como você se identifica espiritualmente hoje?",
@@ -83,94 +64,9 @@ export const QUESTIONS: Question[] = [
     ],
   },
   {
-    id: "q4",
+    id: "q3",
     block: 1,
-    blockOrder: 4,
-    field: "email",
-    type: "text",
-    inputType: "email",
-    text: "Qual o seu e-mail?",
-    subtext: "Em até alguns minutos sua análise chegará aqui",
-    placeholder: "voce@exemplo.com",
-    required: true,
-  },
-
-  // BLOCO 2 — Seu momento de vida
-  {
-    id: "q5",
-    block: 2,
-    blockOrder: 1,
-    field: "areas_de_vida",
-    type: "multi",
-    text: "Em qual área da sua vida você tem prestado mais atenção agora?",
-    subtext: "Escolha até 2",
-    required: true,
-    minSelections: 1,
-    maxSelections: 2,
-    options: [
-      { value: "relacionamento", label: "Relacionamento amoroso" },
-      { value: "familia", label: "Família e relações próximas" },
-      { value: "carreira", label: "Carreira / trabalho" },
-      { value: "dinheiro", label: "Dinheiro e estabilidade" },
-      { value: "saude_fisica", label: "Saúde física" },
-      { value: "saude_mental", label: "Saúde mental / emocional" },
-      { value: "espiritualidade", label: "Espiritualidade / propósito" },
-      { value: "parentalidade", label: "Parentalidade (atual ou futura)" },
-      { value: "autoconhecimento", label: "Autoconhecimento geral" },
-    ],
-  },
-  {
-    id: "q6",
-    block: 2,
-    blockOrder: 2,
-    field: "evento_recente",
-    type: "single",
-    text: "Aconteceu algo importante na sua vida nos últimos 90 dias?",
-    required: true,
-    options: [
-      { value: "muito_significativo", label: "Sim, algo muito significativo" },
-      { value: "mudancas_relevantes", label: "Sim, mudanças relevantes" },
-      { value: "nada_especial", label: "Nada de muito especial" },
-      { value: "periodo_dificil", label: "Foi um período difícil" },
-      { value: "prefiro_nao_comentar", label: "Prefiro não comentar" },
-    ],
-  },
-  {
-    id: "q7",
-    block: 2,
     blockOrder: 3,
-    field: "contexto_pessoal",
-    type: "textarea",
-    text: "Se quiser, conte brevemente o que está acontecendo agora na sua vida.",
-    placeholder:
-      "Você não precisa entrar em muitos detalhes, só o que faz sentido pra você compartilhar.",
-    maxLength: 1000,
-    required: false,
-  },
-  {
-    id: "q8",
-    block: 2,
-    blockOrder: 4,
-    field: "estado_emocional",
-    type: "single",
-    text: "Como você descreveria seu estado emocional predominante nas últimas semanas?",
-    required: true,
-    options: [
-      { value: "ansiosa", label: "Ansiedade / inquietação" },
-      { value: "triste", label: "Tristeza / pra baixo" },
-      { value: "confusa", label: "Confusão / sem direção" },
-      { value: "em_transformacao", label: "Em transformação" },
-      { value: "tranquila", label: "Tranquilidade / em paz" },
-      { value: "empolgada", label: "Empolgação / esperança" },
-      { value: "cansada", label: "Cansaço / esgotamento" },
-    ],
-  },
-
-  // BLOCO 4 — O sonho (block 3 é só intro)
-  {
-    id: "q9",
-    block: 4,
-    blockOrder: 1,
     field: "quando_sonhou",
     type: "single",
     text: "Quando você teve esse sonho?",
@@ -180,30 +76,29 @@ export const QUESTIONS: Question[] = [
       { value: "ultimos_3_dias", label: "Nos últimos 3 dias" },
       { value: "ultima_semana", label: "Na última semana" },
       { value: "ultimo_mes", label: "No último mês" },
-      {
-        value: "ha_mais_tempo",
-        label: "Há mais tempo, mas ele ficou marcado",
-      },
+      { value: "ha_mais_tempo", label: "Há mais tempo, mas ele ficou marcado" },
     ],
   },
+
+  // BLOCO 2 — O sonho
   {
-    id: "q10",
-    block: 4,
-    blockOrder: 2,
+    id: "q4",
+    block: 2,
+    blockOrder: 1,
     field: "sonho_descricao",
     type: "textarea",
-    text: "Descreva seu sonho com o máximo de detalhes possível.",
+    text: "Conte o seu sonho.",
     subtext:
-      "Conte como se estivesse narrando um filme. Quem aparecia? Onde acontecia? O que você fazia? Como tudo terminou?",
-    placeholder: "Comece descrevendo onde você estava...",
-    minLength: 100,
+      "Pode ser do seu jeito, sem se preocupar em escrever bonito. Quanto mais detalhe (quem aparecia, onde era, o que aconteceu), mais profunda fica a análise.",
+    placeholder: "Comece descrevendo o que você lembra...",
+    minLength: 40,
     maxLength: 3000,
     required: true,
   },
   {
-    id: "q11",
-    block: 4,
-    blockOrder: 3,
+    id: "q5",
+    block: 2,
+    blockOrder: 2,
     field: "emocao_durante_sonho",
     type: "single",
     text: "Qual foi a emoção mais forte que você sentiu durante o sonho?",
@@ -221,9 +116,9 @@ export const QUESTIONS: Question[] = [
     ],
   },
   {
-    id: "q12",
-    block: 4,
-    blockOrder: 4,
+    id: "q6",
+    block: 2,
+    blockOrder: 3,
     field: "sensacao_ao_acordar",
     type: "single",
     text: "E ao acordar, como você se sentiu?",
@@ -243,120 +138,11 @@ export const QUESTIONS: Question[] = [
       { value: "real_demais", label: "Sentindo que era “real demais”" },
     ],
   },
-  {
-    id: "q13",
-    block: 4,
-    blockOrder: 5,
-    field: "personagens",
-    type: "multi",
-    text: "Quem aparecia no sonho?",
-    subtext: "Marque tudo que se aplica",
-    required: true,
-    minSelections: 1,
-    options: [
-      { value: "apenas_eu", label: "Apenas eu" },
-      { value: "conhecidas_atuais", label: "Pessoas que conheço atualmente" },
-      { value: "passado", label: "Pessoas do meu passado" },
-      { value: "falecidas", label: "Alguém que já faleceu" },
-      { value: "desconhecidas", label: "Pessoas desconhecidas" },
-      { value: "figura_religiosa", label: "Figura religiosa ou espiritual" },
-      { value: "animais", label: "Animais" },
-      { value: "criancas", label: "Crianças" },
-      { value: "eu_outra_idade", label: "Eu em outra idade" },
-    ],
-  },
-  {
-    id: "q14",
-    block: 4,
-    blockOrder: 6,
-    field: "elementos_simbolicos",
-    type: "multi",
-    text: "Houve algum elemento ou símbolo que se destacou?",
-    subtext: "Marque tudo que aparecer no seu sonho",
-    required: true,
-    minSelections: 1,
-    options: [
-      { value: "agua", label: "Água (mar, rio, chuva, inundação)" },
-      { value: "fogo", label: "Fogo / queimaduras" },
-      { value: "casas", label: "Casas / construções" },
-      { value: "estradas", label: "Estradas / caminhos" },
-      { value: "veiculos", label: "Veículos (carro, avião, barco)" },
-      { value: "animais", label: "Animais" },
-      { value: "cores", label: "Cores marcantes" },
-      { value: "luz_escuridao", label: "Luz ou escuridão intensas" },
-      { value: "voar_cair", label: "Voar ou cair" },
-      { value: "ser_perseguida", label: "Perseguição" },
-      { value: "dentes_cabelo", label: "Dentes / cabelo / corpo" },
-      { value: "objetos_religiosos", label: "Objetos religiosos / sagrados" },
-      { value: "nenhum", label: "Nenhum elemento específico" },
-    ],
-  },
 
-  // BLOCO 5 — Padrões
+  // BLOCO 3 — Sua pergunta + e-mail
   {
-    id: "q15",
-    block: 5,
-    blockOrder: 1,
-    field: "recorrencia",
-    type: "single",
-    text: "Esse sonho é recorrente?",
-    required: true,
-    options: [
-      { value: "anos", label: "Sim, sonho com isso há anos" },
-      { value: "meses", label: "Sim, sonho com isso há meses" },
-      { value: "algumas_vezes", label: "Sim, tive algumas vezes recentemente" },
-      { value: "unico", label: "Não, foi único" },
-      { value: "nao_sei", label: "Não sei dizer" },
-    ],
-  },
-  {
-    id: "q16",
-    block: 5,
-    blockOrder: 2,
-    field: "frequencia_lembranca",
-    type: "single",
-    text: "Você costuma se lembrar dos seus sonhos?",
-    required: true,
-    options: [
-      { value: "sempre", label: "Sempre, em detalhes" },
-      { value: "frequentemente", label: "Frequentemente" },
-      { value: "as_vezes", label: "Às vezes" },
-      { value: "raramente", label: "Raramente" },
-      { value: "quase_nunca", label: "Quase nunca, esse foi uma exceção" },
-    ],
-  },
-  {
-    id: "q17",
-    block: 5,
-    blockOrder: 3,
-    field: "tema_recorrente_geral",
-    type: "text",
-    inputType: "text",
-    text: "Existe algum elemento ou tema que aparece com frequência nos seus sonhos em geral?",
-    placeholder: "Ex: água, perseguição, cair...",
-    required: false,
-  },
-  {
-    id: "q18",
-    block: 5,
-    blockOrder: 4,
-    field: "padrao_recente",
-    type: "single",
-    text: "Nas últimas semanas, seus sonhos têm sido:",
-    required: true,
-    options: [
-      { value: "mais_intensos", label: "Mais intensos que o normal" },
-      { value: "mais_frequentes", label: "Mais frequentes que o normal" },
-      { value: "mais_perturbadores", label: "Mais perturbadores que o normal" },
-      { value: "normal", label: "Tudo dentro do normal" },
-      { value: "mais_raros", label: "Mais raros / não tenho lembrado" },
-    ],
-  },
-
-  // BLOCO 6 — Sua pergunta
-  {
-    id: "q19",
-    block: 6,
+    id: "q7",
+    block: 3,
     blockOrder: 1,
     field: "pergunta_principal",
     type: "textarea",
@@ -367,47 +153,16 @@ export const QUESTIONS: Question[] = [
     required: true,
   },
   {
-    id: "q20",
-    block: 6,
+    id: "q8",
+    block: 3,
     blockOrder: 2,
-    field: "expectativas",
-    type: "multi",
-    text: "O que você espera descobrir com sua análise Onírica?",
-    subtext: "Marque até 3",
+    field: "email",
+    type: "text",
+    inputType: "email",
+    text: "Pra onde enviamos sua análise?",
+    subtext: "Em até alguns minutos sua análise completa chega no seu e-mail.",
+    placeholder: "voce@exemplo.com",
     required: true,
-    minSelections: 1,
-    maxSelections: 3,
-    options: [
-      { value: "significado_simbolico", label: "O significado simbólico do sonho" },
-      { value: "mensagem_espiritual", label: "Uma mensagem espiritual / de Deus" },
-      { value: "inconsciente", label: "O que meu inconsciente está processando" },
-      { value: "passado", label: "Conexão com algo do meu passado" },
-      { value: "orientacao_decisao", label: "Orientação pra uma decisão atual" },
-      { value: "aviso_futuro", label: "Aviso sobre o futuro" },
-      { value: "compreensao_emocional", label: "Compreensão emocional mais profunda" },
-    ],
-  },
-  {
-    id: "q21",
-    block: 6,
-    blockOrder: 3,
-    field: "nivel_crenca",
-    type: "scale",
-    text: "Em uma escala de 0 a 10, o quanto você acredita que sonhos carregam significado?",
-    min: 0,
-    max: 10,
-    required: true,
-  },
-  {
-    id: "q22",
-    block: 6,
-    blockOrder: 4,
-    field: "informacoes_adicionais",
-    type: "textarea",
-    text: "Tem algo mais que você queira me contar antes de eu preparar sua análise?",
-    placeholder: "Qualquer coisa que ache importante...",
-    maxLength: 1000,
-    required: false,
   },
 ];
 
@@ -417,7 +172,7 @@ export const TOTAL_QUESTIONS = QUESTIONS.length;
 export const QUIZ_INTRO_CONTENT = {
   title: "Boas-vindas à Onírica.",
   body: [
-    "Em alguns minutos, você vai responder algumas perguntas sobre você, seu momento de vida e o sonho que te trouxe até aqui.",
+    "Em alguns minutos, você vai responder algumas perguntas sobre você e o sonho que te trouxe até aqui.",
     "Quanto mais sinceridade e detalhe você trouxer, mais profunda será sua análise.",
     "Tudo o que você compartilhar aqui é confidencial e usado apenas pra preparar sua experiência personalizada.",
     "Respira fundo. Vamos começar.",
@@ -425,15 +180,12 @@ export const QUIZ_INTRO_CONTENT = {
   cta: "Quero começar",
 };
 
-// The old static block-3 intro now lives in lib/storytelling.ts as the
-// "before-dream" interstitial, where it can also mirror the user's answers.
-
 /** Helper: find question by id */
 export function findQuestion(id: string): Question | undefined {
   return QUESTIONS.find((q) => q.id === id);
 }
 
-/** Helper: question at index (0..21) */
+/** Helper: question at index (0..7) */
 export function questionAt(index: number): Question | undefined {
   return QUESTIONS[index];
 }

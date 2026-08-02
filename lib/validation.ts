@@ -6,47 +6,23 @@ import type { AnswerValue, Question } from "@/types/quiz";
  * Mirrors the briefing's validation rules.
  */
 export const QuizSubmissionSchema = z.object({
-  // Bloco 1
+  // Bloco 1 — você e seu sonho
   nome: z.string().min(2, "Mínimo 2 caracteres"),
-  idade: z.string().min(1, "Selecione uma opção"),
   identificacao_espiritual: z.string().min(1, "Selecione uma opção"),
   identificacao_espiritual_outra: z.string().optional(),
-  email: z.string().email("E-mail inválido"),
-
-  // Bloco 2
-  areas_de_vida: z
-    .array(z.string())
-    .min(1, "Selecione pelo menos 1")
-    .max(2, "Selecione no máximo 2"),
-  evento_recente: z.string().min(1, "Selecione uma opção"),
-  contexto_pessoal: z.string().max(1000).optional(),
-  estado_emocional: z.string().min(1, "Selecione uma opção"),
-
-  // Bloco 4
   quando_sonhou: z.string().min(1, "Selecione uma opção"),
+
+  // Bloco 2 — o sonho
   sonho_descricao: z
     .string()
-    .min(100, "Conte com mais detalhes (mínimo 100 caracteres)")
+    .min(40, "Conte ao menos uma frase sobre o sonho")
     .max(3000, "Máximo 3000 caracteres"),
   emocao_durante_sonho: z.string().min(1, "Selecione uma opção"),
   sensacao_ao_acordar: z.string().min(1, "Selecione uma opção"),
-  personagens: z.array(z.string()).min(1, "Selecione pelo menos 1"),
-  elementos_simbolicos: z.array(z.string()).min(1, "Selecione pelo menos 1"),
 
-  // Bloco 5
-  recorrencia: z.string().min(1, "Selecione uma opção"),
-  frequencia_lembranca: z.string().min(1, "Selecione uma opção"),
-  tema_recorrente_geral: z.string().optional(),
-  padrao_recente: z.string().min(1, "Selecione uma opção"),
-
-  // Bloco 6
+  // Bloco 3 — sua pergunta + e-mail
   pergunta_principal: z.string().min(20, "Mínimo 20 caracteres"),
-  expectativas: z
-    .array(z.string())
-    .min(1, "Selecione pelo menos 1")
-    .max(3, "Selecione no máximo 3"),
-  nivel_crenca: z.number().min(0).max(10),
-  informacoes_adicionais: z.string().max(1000).optional(),
+  email: z.string().email("E-mail inválido"),
 });
 
 export type ValidatedQuizAnswers = z.infer<typeof QuizSubmissionSchema>;

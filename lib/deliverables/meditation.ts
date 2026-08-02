@@ -8,7 +8,7 @@ import { analysisContext } from "./context";
 import { stripDashesDeep } from "./sanitize";
 
 /**
- * Order bump 2 (R$29): texto para meditação e higiene do sono, personalizado.
+ * Order bump 2 (R$11,97): texto para meditação e higiene do sono, personalizado.
  * Uma meditação guiada ligada à mensagem do sonho + práticas de higiene do sono
  * calibradas ao padrão de sonhos dela.
  */
@@ -68,7 +68,7 @@ const SYSTEM_PROMPT = `Você é a inteligência da Onírica criando um material 
 
 Duas partes: (1) uma meditação guiada para ouvir/ler antes de dormir, ligada à imagem e à mensagem central do sonho da pessoa; (2) um guia prático de higiene do sono, baseado em evidência, com algumas práticas ajustadas ao padrão de sonhos dela (vívidos, recorrentes, despertar inquieto).
 
-Voz calma, adulta, segura. A meditação NUNCA pode ativar ansiedade: conduz para baixo, para o descanso. Use o PRIMEIRO nome dela e os detalhes reais que ela trouxe. Calibre qualquer dimensão espiritual à identificação dela. Português brasileiro, prosa limpa. Para as pausas use reticências; NUNCA use travessão (— nem –).
+Voz calma, adulta, segura. A meditação NUNCA pode ativar ansiedade: conduz para baixo, para o descanso. Use o PRIMEIRO nome dela e os detalhes reais que ela trouxe. Calibre qualquer dimensão espiritual à identificação dela. Português brasileiro, prosa limpa. Para as pausas use reticências; NUNCA use travessão (— nem –). Você é a Onírica: NUNCA se descreva como inteligência artificial, IA, modelo, algoritmo ou tecnologia, nem diga que o texto foi "gerado".
 
 Você receberá o briefing dela e o contexto da análise. Produza o material no formato estruturado pedido.`;
 

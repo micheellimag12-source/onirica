@@ -5,7 +5,10 @@ import { ArrowRight, Lock, Headphones, Map, BookOpen, FileText, Sparkles } from 
 import type { PreviewContent } from "@/types/quiz";
 import { CTAButton } from "@/components/CTAButton";
 import { OniricaMark } from "@/components/OniricaMark";
-import { fbqTrack } from "@/lib/fbq";
+import { fbEvent } from "@/lib/fbq";
+import { PRICES, CURRENCY } from "@/lib/pricing";
+import { Testimonials } from "@/components/landing/Testimonials";
+import { depoimentosDestaque } from "@/lib/depoimentos";
 
 interface Props {
   preview: PreviewContent;
@@ -69,6 +72,13 @@ export function PreviewReveal({ preview, analysisId }: Props) {
       {/* Open loop — what's still hidden */}
       <p className="text-foreground/80 leading-relaxed">{preview.gancho}</p>
 
+      {/* Prova pelo próprio produto: ela acabou de ler algo escrito só pra ela.
+          É a prova social mais forte disponível hoje, e é verificável. */}
+      <p className="rounded-xl border border-border bg-card/60 px-5 py-4 text-sm leading-relaxed text-foreground/80">
+        O que você acabou de ler foi escrito agora, a partir do seu sonho.
+        Nenhuma outra pessoa recebeu essas palavras.
+      </p>
+
       {/* Locked: the full analysis */}
       <div className="relative flex flex-col gap-5 overflow-hidden rounded-2xl border border-primary/30 bg-card p-6 md:p-8">
         <div
@@ -111,12 +121,23 @@ export function PreviewReveal({ preview, analysisId }: Props) {
         </div>
       </div>
 
+      {/* Prova social no momento da decisão (não renderiza sem depoimentos reais) */}
+      <Testimonials
+        variant="compact"
+        items={depoimentosDestaque(2)}
+        titulo="Quem já desbloqueou"
+      />
+
       {/* Checkout CTA */}
       <div className="flex flex-col items-center gap-3">
         {checkoutUrl ? (
           <a
             href={checkoutUrl}
-            onClick={() => fbqTrack("InitiateCheckout")}
+            onClick={() =>
+              fbEvent("InitiateCheckout", {
+                custom: { value: PRICES.core, currency: CURRENCY },
+              })
+            }
             className="inline-flex min-h-[48px] cursor-pointer items-center justify-center gap-2 rounded-xl bg-primary px-7 py-4 text-base font-medium text-primary-foreground transition-all hover:brightness-110"
           >
             Desbloquear minha análise completa
@@ -134,7 +155,8 @@ export function PreviewReveal({ preview, analysisId }: Props) {
           </>
         )}
         <span className="text-xs text-muted-foreground text-center max-w-[360px]">
-          Acesso imediato após o pagamento · Pagamento seguro
+          Na próxima tela você escolhe como pagar. O acesso abre aqui mesmo,
+          logo depois.
         </span>
       </div>
     </motion.div>

@@ -1,4 +1,5 @@
 import { Headphones, Moon, Lock, ArrowRight, Check } from "lucide-react";
+import { PRICES, formatPrice } from "@/lib/pricing";
 
 type Kind = "audio" | "meditation";
 
@@ -9,7 +10,7 @@ const CONFIG: Record<
   audio: {
     eyebrow: "Complemento",
     titulo: "Áudio narrado",
-    preco: "R$37",
+    preco: formatPrice(PRICES.audio),
     icon: Headphones,
     intro:
       "Ouça sua análise completa na voz da Onírica, de olhos fechados, talvez antes de dormir.",
@@ -22,7 +23,7 @@ const CONFIG: Record<
   meditation: {
     eyebrow: "Complemento",
     titulo: "Meditação & sono",
-    preco: "R$29",
+    preco: formatPrice(PRICES.meditation),
     icon: Moon,
     intro:
       "Uma meditação guiada ligada à mensagem do seu sonho, com um guia prático de higiene do sono.",

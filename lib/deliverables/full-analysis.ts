@@ -6,14 +6,15 @@ import { formatAnswersForPrompt } from "@/lib/answers-format";
 import { stripDashesDeep } from "./sanitize";
 
 /**
- * Gerador da ANÁLISE COMPLETA (entregável principal, R$47).
+ * Gerador da ANÁLISE COMPLETA (entregável principal, R$19,97).
  *
  * Diferente da prévia (que é proibida de interpretar), aqui a IA entrega tudo:
  * interpreta cada símbolo, responde a pergunta principal dela e dá orientação.
  * A mesma saída alimenta o Mapa Onírico visual (campos `simbolos` + `palavra_guia`).
  */
 
-// Qualidade > custo: roda uma vez por compra (R$47). Override via env.
+// Roda uma vez por compra (R$19,97). Modelo fixado por env em produção
+// (DELIVERABLES_MODEL); o default abaixo só vale em dev sem env.
 const MODEL =
   process.env.DELIVERABLES_MODEL ??
   process.env.ANTHROPIC_MODEL ??
@@ -124,10 +125,12 @@ Nunca empurre fé em quem não pediu, nem esvazie a fé de quem a tem.
 
 PRINCÍPIOS:
 - Use o PRIMEIRO nome dela, os símbolos e as palavras exatas que ela trouxe. Específico, nunca genérico.
+- Se a descrição do sonho for curta, trabalhe com o que ela deu, apoiando-se na emoção que sentiu, na sensação ao acordar e na pergunta dela. Produza uma análise focada e honesta. NUNCA invente cenas ou símbolos que ela não trouxe, nem compense a brevidade com generalidades vazias.
 - Trate o sonho com seriedade; ela confiou algo íntimo a você e PAGOU por esta análise.
 - Crie clareza e acolhimento, não ansiedade. Nada de previsões fatídicas do futuro, diagnósticos médicos ou medo.
 - Tom acolhedor e empoderador. Português brasileiro. Frases limpas, sem encheção de linguiça.
 - PONTUAÇÃO: NUNCA use travessão (— nem –). No lugar, use vírgula, ponto, dois-pontos ou parênteses. Texto com travessão soa artificial.
+- IDENTIDADE: você é a Onírica, e ponto. NUNCA se descreva como inteligência artificial, IA, modelo, algoritmo, sistema, tecnologia ou programa, nem diga que o texto foi "gerado". Não fale de como a análise é produzida. Se ela perguntar quem escreveu, a resposta é a Onírica.
 
 AGORA É DIFERENTE DA PRÉVIA — ESTA É A ANÁLISE COMPLETA E PAGA:
 Aqui você ENTREGA tudo. Interprete cada símbolo de verdade. RESPONDA diretamente a pergunta principal que ela fez ao sonho. Dê a orientação prática e a mensagem final. Nada de loops abertos ou "isso fica para depois" — ela já está do outro lado da porta. Profundidade, honestidade e generosidade. Faça valer cada centavo.

@@ -108,8 +108,8 @@ export interface QuestionOption {
 }
 
 interface QuestionBase {
-  id: string; // q1..q22
-  block: Exclude<BlockId, 3>; // questions never live in block 3 (intro only)
+  id: string; // q1..q8
+  block: BlockId;
   blockOrder: number; // 1-based order within block
   field: AnswerField;
   text: string;

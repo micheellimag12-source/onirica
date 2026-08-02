@@ -30,9 +30,16 @@ export async function POST(req: NextRequest) {
 
   // Persiste a submissão (status pending). Se o Supabase ainda não estiver
   // configurado, cai num id efêmero para não quebrar o funil.
+  // fbp/fbc vêm fora do schema de respostas (Zod descarta extras), então lê do cru.
+  const raw = body as Record<string, unknown>;
+  const fbCtx = {
+    fbp: typeof raw.fbp === "string" ? raw.fbp : null,
+    fbc: typeof raw.fbc === "string" ? raw.fbc : null,
+  };
+
   if (supabaseConfigured()) {
     try {
-      const { id } = await createAnalysis(parsed.data);
+      const { id } = await createAnalysis(parsed.data, fbCtx);
       return NextResponse.json({ success: true, analysis_id: id });
     } catch (error) {
       console.error("[quiz] falha ao persistir análise:", error);

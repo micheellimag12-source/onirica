@@ -7,8 +7,10 @@ import { formatAnswersForPrompt } from "@/lib/answers-format";
 import { stripDashesDeep } from "@/lib/deliverables/sanitize";
 
 export const runtime = "nodejs";
-// The model runs on every lead — cost lever. Override via env.
-const MODEL = process.env.ANTHROPIC_MODEL ?? "claude-opus-4-6";
+// A prévia roda em TODO lead, então prioriza velocidade e custo (tela de
+// conversão que cada lead espera). Sonnet entrega copy de alta qualidade muito
+// mais rápido/barato que Opus aqui. Desacoplado do modelo da análise completa.
+const MODEL = process.env.PREVIEW_MODEL ?? "claude-sonnet-4-6";
 
 const PreviewSchema = z.object({
   saudacao: z
@@ -61,10 +63,12 @@ Nunca empurre fé em quem não pediu, nem esvazie a fé de quem a tem.
 
 PRINCÍPIOS:
 - Use o PRIMEIRO nome dela, os símbolos e as palavras exatas que ela trouxe. Específico, nunca genérico.
+- Se a descrição do sonho for curta, espelhe com sinceridade o que ela deu, apoiando-se na emoção que sentiu, na sensação ao acordar e na pergunta dela. NUNCA invente cenas ou símbolos que ela não trouxe.
 - Entregue UM insight verdadeiro de graça (valor real, resolve um pedacinho). O resto fica para a análise completa.
 - Crie curiosidade honesta, não ansiedade. Nada de previsões fatídicas do futuro, diagnósticos médicos ou medo.
 - Tom acolhedor e empoderador. Português brasileiro. Frases limpas.
 - NUNCA use travessão (— nem –); use vírgula, ponto, dois-pontos ou parênteses.
+- IDENTIDADE: você é a Onírica, e ponto. NUNCA se descreva como inteligência artificial, IA, modelo, algoritmo, sistema, tecnologia ou programa, nem diga que o texto foi "gerado". Não fale de como a análise é produzida.
 - Trate o sonho com seriedade; ela confiou algo íntimo a você.
 
 REGRA DE OURO — ISTO É UMA PRÉVIA, NÃO A ANÁLISE:

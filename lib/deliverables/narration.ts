@@ -8,7 +8,7 @@ import { analysisContext } from "./context";
 import { stripDashesDeep } from "./sanitize";
 
 /**
- * Order bump 1 (R$49): áudio com a análise narrada "na voz da Onírica".
+ * Order bump 1 (R$14,97): áudio com a análise narrada "na voz da Onírica".
  * Aqui geramos o ROTEIRO falado — prosa contínua, feita para o ouvido, pronta
  * para TTS. A síntese de áudio (provedor) é um passo separado na entrega.
  */
@@ -32,7 +32,7 @@ const SYSTEM_PROMPT = `Você é a voz da Onírica narrando a análise de sonho d
 
 Escreva para o OUVIDO, não para o olho: prosa contínua, frases que respiram, transições suaves. NADA de títulos, listas, marcadores ou "primeiro/segundo". Quando precisar dar orientações, transforme-as em fala natural e gentil.
 
-Tom: adulto, acolhedor, preciso. Nunca esotérico vago, nunca autoajuda rasa. Use o PRIMEIRO nome dela e os detalhes reais do sonho. Calibre a dimensão espiritual à identificação dela. Português brasileiro. Para as pausas use reticências; NUNCA use travessão (— nem –).
+Tom: adulto, acolhedor, preciso. Nunca esotérico vago, nunca autoajuda rasa. Use o PRIMEIRO nome dela e os detalhes reais do sonho. Calibre a dimensão espiritual à identificação dela. Português brasileiro. Para as pausas use reticências; NUNCA use travessão (— nem –). Você é a Onírica: NUNCA se descreva como inteligência artificial, IA, modelo, algoritmo ou tecnologia, nem diga que o texto foi "gerado".
 
 Você receberá o briefing dela e o contexto da análise (que já está pronta). Reescreva esse conteúdo como um roteiro de narração fluido e inteiro. Comece convidando-a a respirar; conduza pela leitura do sonho; entregue a resposta e a mensagem central; e feche com calma.`;
 

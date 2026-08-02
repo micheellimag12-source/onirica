@@ -24,6 +24,8 @@ export interface AnalysisRow {
   cakto_order_id: string | null;
   bump_audio: boolean;
   bump_meditation: boolean;
+  fbp: string | null;
+  fbc: string | null;
   answers: QuizAnswers;
   analysis: FullAnalysis | null;
   journal: Journal | null;
@@ -44,6 +46,7 @@ export function newAccessToken(): string {
 /** Cria a linha no submit do quiz (status pending). Retorna id + token. */
 export async function createAnalysis(
   answers: QuizAnswers,
+  ctx?: { fbp?: string | null; fbc?: string | null },
 ): Promise<{ id: string; token: string }> {
   const db = supabaseAdmin();
   const token = newAccessToken();
@@ -55,6 +58,8 @@ export async function createAnalysis(
       nome: answers.nome ?? null,
       email: answers.email ?? null,
       status: "pending",
+      fbp: ctx?.fbp ?? null,
+      fbc: ctx?.fbc ?? null,
     })
     .select("id, token")
     .single();
@@ -83,6 +88,29 @@ export async function getAnalysisByCaktoOrder(
     .from("analyses")
     .select("*")
     .eq("cakto_order_id", orderId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (error) throw error;
+  return (data as AnalysisRow | null) ?? null;
+}
+
+/**
+ * Fallback de entrega: quando a compra chega sem `src` (link sem rastreio,
+ * link compartilhado), casa pela conta de e-mail do comprador, pegando a
+ * análise mais recente em 'pending' ou 'generating'. Incluir 'generating'
+ * faz os eventos-irmãos de um mesmo pedido (produto + bumps) convergirem na
+ * MESMA análise, mesmo que um deles já tenha sido reivindicado.
+ */
+export async function getRecentAnalysisByEmail(
+  email: string,
+): Promise<AnalysisRow | null> {
+  const db = supabaseAdmin();
+  const { data, error } = await db
+    .from("analyses")
+    .select("*")
+    .eq("email", email)
+    .in("status", ["pending", "generating"])
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();

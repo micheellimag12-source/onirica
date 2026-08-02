@@ -16,7 +16,10 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '${PIXEL_ID}');
-fbq('track', 'PageView');`}
+var _pv=(self.crypto&&self.crypto.randomUUID)?self.crypto.randomUUID():(Date.now()+'-'+Math.random().toString(16).slice(2));
+fbq('track', 'PageView', {}, {eventID:_pv});
+window.dataLayer=window.dataLayer||[];
+window.dataLayer.push({event:'fb_event',fb_name:'PageView',fb_event_id:_pv});`}
       </Script>
       <noscript>
         {/* eslint-disable-next-line @next/next/no-img-element */}
