@@ -90,7 +90,7 @@ export function UpsellCard({
               </span>
             )}
             <span className="text-xs text-muted-foreground">
-              Pagamento seguro · liberado aqui mesmo após a compra
+              Liberado aqui mesmo após a compra · garantia de 7 dias
             </span>
           </div>
         </div>

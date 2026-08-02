@@ -13,6 +13,15 @@ import {
  */
 const PERGUNTAS: { q: string; a: React.ReactNode }[] = [
   {
+    q: "E se a análise não falar comigo?",
+    a: (
+      <p>
+        Você tem 7 dias. Se a leitura não fizer sentido para você, é só pedir que
+        eu devolvo o valor integral, sem precisar justificar.
+      </p>
+    ),
+  },
+  {
     // [checar] fronteira exata entre gratuito e pago
     q: "Preciso pagar para começar?",
     a: (

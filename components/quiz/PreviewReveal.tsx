@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { ArrowRight, Lock, Headphones, Map, BookOpen, FileText, Sparkles } from "lucide-react";
+import { ArrowRight, Lock, Headphones, Map, BookOpen, FileText, Sparkles, ShieldCheck } from "lucide-react";
 import type { PreviewContent } from "@/types/quiz";
 import { CTAButton } from "@/components/CTAButton";
 import { OniricaMark } from "@/components/OniricaMark";
@@ -119,6 +119,21 @@ export function PreviewReveal({ preview, analysisId }: Props) {
             análise narrada na voz da Onírica.
           </span>
         </div>
+      </div>
+
+      {/* Reversão de risco. 7 dias coincide com o direito de arrependimento do
+          CDC para compra online, então é uma promessa fácil de honrar. */}
+      <div className="flex items-start gap-3 rounded-2xl border border-primary/25 bg-card p-5">
+        <ShieldCheck
+          className="mt-0.5 size-5 shrink-0 text-primary"
+          strokeWidth={1.5}
+          aria-hidden="true"
+        />
+        <p className="text-sm leading-relaxed text-foreground/85">
+          <span className="font-medium text-foreground">Garantia de 7 dias.</span>{" "}
+          Leia tudo com calma. Se a análise não falar com você, devolvo o valor
+          integral, sem precisar justificar.
+        </p>
       </div>
 
       {/* Prova social no momento da decisão (não renderiza sem depoimentos reais) */}

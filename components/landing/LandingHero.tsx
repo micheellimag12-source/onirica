@@ -137,7 +137,8 @@ export function LandingHero({ onStart, variant = "a" }: Props) {
           </div>
 
           <p className="mt-4 text-xs text-muted-foreground">
-            Sem cadastro para começar. Você vê uma prévia antes de decidir.
+            Sem cadastro para começar. Você vê uma prévia antes de decidir, e a
+            análise completa tem garantia de 7 dias.
           </p>
         </section>
       </Reveal>
