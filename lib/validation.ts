@@ -21,7 +21,7 @@ export const QuizSubmissionSchema = z.object({
   sensacao_ao_acordar: z.string().min(1, "Selecione uma opção"),
 
   // Bloco 3 — sua pergunta + e-mail
-  pergunta_principal: z.string().min(20, "Mínimo 20 caracteres"),
+  pergunta_principal: z.string().min(10, "Mínimo 10 caracteres"),
   email: z.string().email("E-mail inválido"),
 });
 

@@ -149,7 +149,7 @@ export const QUESTIONS: Question[] = [
     text: "Se você pudesse fazer UMA pergunta ao seu sonho, qual seria?",
     subtext: "Sua análise vai responder essa pergunta diretamente.",
     placeholder: "Por exemplo: por que esse sonho voltou agora?",
-    minLength: 20,
+    minLength: 10,
     required: true,
   },
   {
